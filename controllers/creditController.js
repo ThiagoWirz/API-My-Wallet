@@ -1,3 +1,4 @@
+import { redirect } from "express/lib/response";
 import joi from "joi";
 import db from "../src/database.js";
 
@@ -21,6 +22,10 @@ export async function postCredit(req, res){
     }
     try{
         const session = await db.collection("sessions").findOne({token})
+        if(!session){
+            res.sendStatus(401)
+            return
+        }
         await db.collection("credits").insertOne({...credit, idUser: session.idUser})
         res.sendStatus(201)
     }
