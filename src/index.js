@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { logIn, signUp } from "../controllers/authController.js";
-import { postCredit } from "../controllers/creditController.js";
+import { getCredits, postCredit } from "../controllers/creditController.js";
 
 
 const app = express();
@@ -13,5 +13,7 @@ app.post("/auth/sign-up", signUp)
 app.post("/auth/login", logIn)
 
 app.post("/credits", postCredit)
+
+app.get("/credits", getCredits)
 
 app.listen(5000, () => console.log("Rodando em http://localhost:5000"));

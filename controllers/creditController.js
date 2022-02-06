@@ -1,4 +1,3 @@
-import { redirect } from "express/lib/response";
 import joi from "joi";
 import db from "../src/database.js";
 
@@ -32,4 +31,23 @@ export async function postCredit(req, res){
 catch{
     res.sendStatus(500)
 }
+}
+
+export async function getCredits(req, res){
+    const authorization = req.headers.authorization;
+    const token = authorization?.replace("Bearer ", "")
+
+    try{
+        const session = await db.collection("sessions").findOne({token})
+        if(!session){
+            res.sendStatus(401)
+            return
+        }
+        const credits =  await db.collection("credits").find({idUser: session.idUser}).toArray()
+        res.send(credits)
+    }
+
+    catch{
+        res.sendStatus(500)
+    }
 }
