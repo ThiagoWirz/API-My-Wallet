@@ -1,20 +1,12 @@
 import bcrypt from "bcrypt";
 import db from "../database.js";
 import {v4 as uuid} from "uuid"
-import userSchema from "../schemas/userSchema.js";
-import logInSchema from "../schemas/loginSchema.js";
-
 
 
 
 export async function signUp(req, res) {
   const user = req.body;
 
-  const validation = userSchema.validate(user);
-  if (validation.error) {
-    res.sendStatus(422);
-    return;
-  }
 
   const sameEmail = await db.collection("users").findOne({ email: user.email });
   if (sameEmail) {
@@ -36,11 +28,6 @@ export async function signUp(req, res) {
 export async function logIn(req, res) {
   const {email, password, name} = req.body;
 
-  const validation = logInSchema.validate({email, password});
-  if (validation.error) {
-    res.sendStatus(422);
-    return;
-  }
 
   try{
   const user = await db.collection("users").findOne({email})

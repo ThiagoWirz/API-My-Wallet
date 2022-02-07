@@ -1,16 +1,10 @@
 import db from "../database.js";
-import creditSchema from "../schemas/creditSchema.js";
 
 export async function postCredit(req, res){
     const credit = req.body
     const authorization = req.headers.authorization;
     const token = authorization?.replace("Bearer ", "")
 
-    const validation = creditSchema.validate(credit)
-    if(validation.error){
-        res.sendStatus(422)
-        return
-    }
     try{
         const session = await db.collection("sessions").findOne({token})
         if(!session){
