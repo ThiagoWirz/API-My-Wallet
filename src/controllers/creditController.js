@@ -1,13 +1,5 @@
-import joi from "joi";
 import db from "../database.js";
-
-const creditSchema = joi.object({
-    value: joi.number().precision(2).required(),
-    description: joi.string().required(),
-    type: joi.string().required(),
-    date: joi.string().required()
-})
-
+import creditSchema from "../schemas/creditSchema.js";
 
 export async function postCredit(req, res){
     const credit = req.body
