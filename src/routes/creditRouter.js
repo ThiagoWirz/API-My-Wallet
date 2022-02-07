@@ -4,7 +4,7 @@ import { creditValidationMiddleware } from "../middlewares/creditValidationMiddl
 
 const creditRouter = Router();
 
-creditRouter.post("/credits",creditValidationMiddleware, postCredit);
+creditRouter.post("/credits", creditValidationMiddleware, postCredit);
 
 creditRouter.get("/credits", getCredits);
 
