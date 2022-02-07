@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import joi from "joi";
-import db from "../src/database.js";
+import db from "../database.js";
 import {v4 as uuid} from "uuid"
 
 const userSchema = joi.object({
@@ -41,7 +41,7 @@ export async function signUp(req, res) {
 }
 
 export async function logIn(req, res) {
-  const {email, password} = req.body;
+  const {email, password, name} = req.body;
 
   const validation = logInSchema.validate({email, password});
   if (validation.error) {
@@ -59,7 +59,7 @@ export async function logIn(req, res) {
   if(bcrypt.compareSync(password, user.password)){
       const token = uuid();
       await db.collection("sessions").insertOne(({token, idUser: user._id}))
-      res.send({token})
+      res.send({name, token})
       return
   }
   res.sendStatus(401);

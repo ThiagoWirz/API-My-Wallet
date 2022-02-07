@@ -1,5 +1,5 @@
 import joi from "joi";
-import db from "../src/database.js";
+import db from "../database.js";
 
 const creditSchema = joi.object({
     value: joi.number().precision(2).required(),
